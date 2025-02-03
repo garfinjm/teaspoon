@@ -66,6 +66,7 @@ def subsample_reads(desired_coverage, name_type, r1, r2):
     # Run rasusa
     rasusa_command = [
         "rasusa", "reads",
+        "-s", "11327544032246541232",
         "-g", str(genome_size),
         "-c", str(desired_coverage),  # Use desired_coverage here
         "-o", r1_out,
