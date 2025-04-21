@@ -1,6 +1,6 @@
 FROM mambaorg/micromamba:1.4.9 as app
 
-ARG SOFTWARENAME_VERSION="0.2.0"
+ARG SOFTWARENAME_VERSION="0.2.1"
 
 USER root
 
@@ -70,5 +70,5 @@ RUN teaspoon.py --help
 # Option 2: write below common usage cases
 RUN wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR166/009/ERR1664619/ERR1664619_1.fastq.gz && \
     wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR166/009/ERR1664619/ERR1664619_2.fastq.gz && \
-    teaspoon.py -c 10 -r1 ERR1664619_1.fastq.gz -r2 ERR1664619_2.fastq.gz
+    teaspoon.py -c 10 -r1 ERR1664619_1.fastq.gz -r2 ERR1664619_2.fastq.gz && \
     tablespoon.py -c 10 -i . -o ./tablespoon_output
