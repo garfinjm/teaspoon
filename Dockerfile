@@ -1,13 +1,13 @@
 FROM mambaorg/micromamba:1.4.9 as app
 
-ARG SOFTWARENAME_VERSION="0.1.0"
+ARG SOFTWARENAME_VERSION="0.2.0"
 
 USER root
 
 WORKDIR /
 
 LABEL base.image="mambaorg/micromamba:1.4.9"
-LABEL dockerfile.version="1"
+LABEL dockerfile.version="2"
 LABEL software="teaspoon"
 LABEL software.version="${SOFTWARENAME_VERSION}"
 LABEL description="Quickly downsample Illumina PE reads to an approximate coverage, without a known genome size."
@@ -26,11 +26,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   tar -xvf ${SOFTWARENAME_VERSION}.tar.gz && \
   rm ${SOFTWARENAME_VERSION}.tar.gz
 
-RUN micromamba install --name base -c conda-forge -c bioconda -c defaults -f ./teaspoon-0.1.0/environment.yml && \
+RUN micromamba install --name base -c conda-forge -c bioconda -c defaults -f ./teaspoon-${SOFTWARENAME_VERSION}/environment.yml && \
  micromamba clean -a -y && \
  mkdir /data
 
-ENV PATH="/teaspoon-0.1.0:/opt/conda/bin/:${PATH}" \
+ENV PATH="/teaspoon-${SOFTWARENAME_VERSION}:/opt/conda/bin/:${PATH}" \
  LC_ALL=C.UTF-8
 
 CMD [ "teaspoon.py", "--help" ]
@@ -71,3 +71,4 @@ RUN teaspoon.py --help
 RUN wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR166/009/ERR1664619/ERR1664619_1.fastq.gz && \
     wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR166/009/ERR1664619/ERR1664619_2.fastq.gz && \
     teaspoon.py -c 10 -r1 ERR1664619_1.fastq.gz -r2 ERR1664619_2.fastq.gz
+    tablespoon.py -c 10 -i . -o ./tablespoon_output
